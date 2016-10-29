@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Data.SQLite;
+using Newtonsoft.Json.Linq;
+using MLMPOS.Service.Entity;
+using Newtonsoft.Json;
 
 namespace MLMPOS.Service.DB
 {
+   
     public enum SALE_ORDER_STSTE
     {
         NEW = -1,
@@ -15,6 +19,13 @@ namespace MLMPOS.Service.DB
     }
     public class SaleOrderService
     {
+        private AccountService accountService;
+
+        public SaleOrderService()
+        {
+            accountService = new AccountService();
+        }
+
         /**
          * 得到所有售卖列表
          * */
@@ -80,6 +91,26 @@ namespace MLMPOS.Service.DB
             }
         }
 
+        public SaleOrder getOrderEntityById(String id)
+        {
+            SaleOrder order = new SaleOrder();
+            DataRow dr =  getOrderById(id);
+            order.Id = dr["id"].ToString();
+            order.Ordercode = dr["ordercode"].ToString();
+            order.Shopcode = dr["shopcode"].ToString();
+            order.Poscode = dr["poscode"].ToString();
+            order.Cashier = dr["cashier"].ToString();
+            order.Amount = dr["amount"].ToString();
+            order.Count = dr["count"].ToString();
+            order.Disamount = dr["disamount"].ToString();
+            order.Createdate = dr["createdate"].ToString();
+            order.Updatedate = dr["updatedate"].ToString();
+            order.State = dr["state"].ToString();
+            order.List = getOrderListByOrderId(id);
+            order.Accountlist = accountService.getTable(id);
+            return order;
+        }
+
         /**
          * 创建售卖单据，并返回，初始状态为新增
          * 
@@ -103,8 +134,8 @@ namespace MLMPOS.Service.DB
                         row["id"] = Guid.NewGuid().ToString("N");
                         row["state"] = SALE_ORDER_STSTE.NEW;
                         DateTime now = DateTime.Now;
-                        row["createdate"] = now;
-                        row["updatedate"] = now;
+                        row["createdate"] = now.ToString("yyyy-MM-dd HH:mm:ss");
+                        row["updatedate"] = now.ToString("yyyy-MM-dd HH:mm:ss");
                         row["ordercode"] = config.SHOP_CODE + config.POS_CODE+ now.ToString("yyMMddHHmmss") + getSeq().ToString().PadLeft(4,'0') ;
 
                         sh.Insert("SaleOrder", row);
@@ -116,6 +147,7 @@ namespace MLMPOS.Service.DB
                         return null;
                     }
                     conn.Close();
+                    
                     return dt.Rows[0];
                 }
             }
@@ -167,7 +199,7 @@ namespace MLMPOS.Service.DB
 
 
         //根据售卖单据号获取售卖明细
-        public DataTable getOrderListByOrderCode(String ordercode)
+        public DataTable getOrderListByOrderId(String orderId)
         {
             using (SQLiteConnection conn = new SQLiteConnection(config.DB_FILE))
             {
@@ -181,8 +213,8 @@ namespace MLMPOS.Service.DB
                     try
                     {
                         Dictionary<string, object> dicParameters = new Dictionary<string, object>();
-                        dicParameters.Add("@ordercode", ordercode);
-                        dt = sh.Select("select * from SaleOrderList where ordercode = @ordercode", dicParameters);
+                        dicParameters.Add("@orderid", orderId);
+                        dt = sh.Select("select * from SaleOrderList where orderid = @orderid", dicParameters);
                     }
                     catch (Exception ex)
                     {
@@ -192,6 +224,7 @@ namespace MLMPOS.Service.DB
                     }
 
                     conn.Close();
+
                     return dt;
                 }
             }
@@ -213,17 +246,17 @@ namespace MLMPOS.Service.DB
                     {
                         Dictionary<String, Object> cond = new Dictionary<string, object>();
                         cond["@barcode"] = row["barcode"];
-                        cond["@ordercode"] = row["ordercode"];
-                        DataTable lt = sh.Select("select * from SaleOrderList where barcode = @barcode and ordercode = @ordercode",cond);
+                        cond["@orderid"] = row["orderid"];
+                        DataTable lt = sh.Select("select * from SaleOrderList where barcode = @barcode and orderid = @orderid",cond);
                         if(lt!=null && lt.Rows.Count > 0)
                         {
                             DataRow dr = lt.Rows[0];
-                            return updateListCount(dr["ordercode"].ToString(),dr["barcode"].ToString(),1,true);
+                            return updateListCount(dr["orderid"].ToString(),dr["barcode"].ToString(),1,true);
                         }
                         else
                         {
                              sh.Insert("SaleOrderList", row);
-                            return updateListCount(row["ordercode"].ToString(), row["barcode"].ToString(), 0,true);
+                            return updateListCount(row["orderid"].ToString(), row["barcode"].ToString(), 0,true);
                         }
                     }
                     catch (Exception ex)
@@ -274,7 +307,7 @@ namespace MLMPOS.Service.DB
         /**
          * 根据售卖单号和条码修改数量 newCount 为指定数量，isSumCount 是否叠加数量 
          * */
-        public DataTable updateListCount(String ordercode,String barcode,Decimal newCount,Boolean isSumCount)
+        public DataTable updateListCount(String orderid,String barcode,Decimal newCount,Boolean isSumCount)
         {
             using (SQLiteConnection conn = new SQLiteConnection(config.DB_FILE))
             {
@@ -290,8 +323,8 @@ namespace MLMPOS.Service.DB
                     {
                         Dictionary<String, Object> cond = new Dictionary<string, object>();
                         cond["@barcode"] = barcode;
-                        cond["@ordercode"] = ordercode;
-                        DataTable lt = sh.Select("select * from SaleOrderList where barcode = @barcode and ordercode = @ordercode", cond);
+                        cond["@orderid"] = orderid;
+                        DataTable lt = sh.Select("select * from SaleOrderList where barcode = @barcode and orderid = @orderid", cond);
                         if (lt != null && lt.Rows.Count > 0)
                         {
                             Dictionary<String, Object> dic = new Dictionary<string, object>();
@@ -317,9 +350,10 @@ namespace MLMPOS.Service.DB
                             dic["disamount"] = disamount;
                             dic["disprice"] = disprice;
                             sh.Update("SaleOrderList", dic, "id", lt.Rows[0]["id"]);
+                           
                         }
                        
-                        dt = getOrderListByOrderCode(ordercode);
+                        dt = getOrderListByOrderId(orderid);
                     }
                     catch (Exception ex)
                     {
@@ -377,6 +411,15 @@ namespace MLMPOS.Service.DB
             }
 
         }
+        /// <summary>
+        /// 修改指定id的单据状态
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="state"></param>
+        public void updateState(String orderId,String state)
+        {
+            update(orderId, "state", state);
+        }
 
         /**
          * 根据售卖单据id修改某一个属性
@@ -398,9 +441,12 @@ namespace MLMPOS.Service.DB
             update(cond, "code",code);
         }
 
-        /**
-       * 修改指定属性
-       * */
+        /// <summary>
+        /// 修改指定的属性
+        /// </summary>
+        /// <param name="cond">条件参数</param>
+        /// <param name="col"></param>
+        /// <param name="value"></param>
         public void update(Dictionary<String,Object> cond , String col , Object value)
         {
             using (SQLiteConnection conn = new SQLiteConnection(config.DB_FILE))
@@ -427,6 +473,8 @@ namespace MLMPOS.Service.DB
             }
 
         }
+
+    
 
 
     }

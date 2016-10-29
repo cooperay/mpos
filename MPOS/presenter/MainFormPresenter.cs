@@ -9,6 +9,8 @@ using MLMPOS.Service.Entity;
 using MLMPOS.Service;
 using MLMPOS.command;
 using System.Windows.Forms;
+using MPOS.SERVICE.MQ;
+using System.Threading;
 
 namespace MLMPOS.presenter
 {
@@ -51,6 +53,8 @@ namespace MLMPOS.presenter
             setCurrentProduct(null);
             setCurrentOrder();
             setLastOrder();
+            Thread t = new Thread(new ThreadStart(ThreadMethod));
+            t.Start();
             //view.dataGridView1.DataSource = p.getList();
             // view.dataGridView1.CurrentCell = view.dataGridView1.Rows[60].Cells[0];
         }
@@ -64,6 +68,7 @@ namespace MLMPOS.presenter
         /// </summary>
         public void scanCode()
         {
+           // MQHelper.getInstance().sendMessage("");
             string barcode = view.barcodeInput.Text;
             if(barcode == "")
             {
@@ -174,6 +179,7 @@ namespace MLMPOS.presenter
         public void setCurrentOrder()
         {
             DataRow row = orderService.gatherSaleOrder(SystemInfo.CurrentOrderId);
+           
             String amountStr = row["amount"].ToString();
             view.amountLabel.Text = amountStr;
             view.countLabel.Text = row["count"].ToString();
@@ -254,6 +260,11 @@ namespace MLMPOS.presenter
             }
 
         }
-       
+
+        public void ThreadMethod()
+        {
+          MQCustomer.getInstance().listenerMessage();
+        }
+
     }
 }

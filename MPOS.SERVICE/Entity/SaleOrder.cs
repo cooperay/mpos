@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 
 namespace MLMPOS.Service.Entity
 {
@@ -10,13 +11,16 @@ namespace MLMPOS.Service.Entity
         private String id;
         private String ordercode;
         private String shopcode;
+        private String poscode;
         private String cashier;
-        private Decimal amount;
-        private Decimal count;
-        private Decimal disamount;
-        private DateTime createdate;
-        private DateTime updatedate;
-        private Boolean issync;
+        private String amount;
+        private String count;
+        private String disamount;
+        private String createdate;
+        private String updatedate;
+        private String state;
+        private DataTable list;
+        private DataTable accountlist;
 
         public string Id
         {
@@ -57,6 +61,19 @@ namespace MLMPOS.Service.Entity
             }
         }
 
+        public string Poscode
+        {
+            get
+            {
+                return poscode;
+            }
+
+            set
+            {
+                poscode = value;
+            }
+        }
+
         public string Cashier
         {
             get
@@ -70,7 +87,7 @@ namespace MLMPOS.Service.Entity
             }
         }
 
-        public decimal Amount
+        public string Amount
         {
             get
             {
@@ -83,7 +100,7 @@ namespace MLMPOS.Service.Entity
             }
         }
 
-        public decimal Count
+        public string Count
         {
             get
             {
@@ -96,7 +113,7 @@ namespace MLMPOS.Service.Entity
             }
         }
 
-        public decimal Disamount
+        public string Disamount
         {
             get
             {
@@ -109,7 +126,7 @@ namespace MLMPOS.Service.Entity
             }
         }
 
-        public DateTime Createdate
+        public string Createdate
         {
             get
             {
@@ -122,7 +139,7 @@ namespace MLMPOS.Service.Entity
             }
         }
 
-        public DateTime Updatedate
+        public string Updatedate
         {
             get
             {
@@ -135,16 +152,42 @@ namespace MLMPOS.Service.Entity
             }
         }
 
-        public bool Issync
+        public string State
         {
             get
             {
-                return issync;
+                return state;
             }
 
             set
             {
-                issync = value;
+                state = value;
+            }
+        }
+
+        public DataTable List
+        {
+            get
+            {
+                return list;
+            }
+
+            set
+            {
+                list = value;
+            }
+        }
+
+        public DataTable Accountlist
+        {
+            get
+            {
+                return accountlist;
+            }
+
+            set
+            {
+                accountlist = value;
             }
         }
     }

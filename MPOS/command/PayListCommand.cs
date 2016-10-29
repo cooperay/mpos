@@ -5,12 +5,15 @@ using System.Text;
 using System.Windows.Forms;
 using MLMPOS.view;
 using MLMPOS.utils;
+using MPOS.SERVICE.MQ;
+using MLMPOS.Service.DB;
 namespace MLMPOS.command
 {
     class PayListCommand : BaseCommand
     {
         private Boolean showPayDialog = false;
         private String typeCode = "1";
+        private SaleOrderService saleOrderService;
         public PayListCommand():this(false,"1")
         {
            
@@ -19,6 +22,7 @@ namespace MLMPOS.command
         {
             this.showPayDialog = showPayDialog;
             this.typeCode = typeCode;
+            saleOrderService = new SaleOrderService();
         }
         public void execute(Form hander)
         {
@@ -38,6 +42,8 @@ namespace MLMPOS.command
             else
             {
                 SystemInfo.LastOrderId = SystemInfo.CurrentOrderId;
+                saleOrderService.updateState(SystemInfo.CurrentOrderId, "5");
+                SaleOrderSyncService.getInstance().SyncOrderById(SystemInfo.CurrentOrderId);
                 mf.presenter.init();
             }
             if (mf != null)

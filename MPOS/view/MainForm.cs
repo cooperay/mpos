@@ -12,7 +12,7 @@ using MLMPOS.command;
 using System.Threading;
 using MLMPOS.Service;
 using System.Data.SQLite;
-
+using MPOS.SERVICE.MQ;
 namespace MLMPOS.view
 {
     public partial class MainForm : Form
@@ -23,8 +23,9 @@ namespace MLMPOS.view
             InitializeComponent();
             DBStatus.init();
             presenter = new MainFormPresenter(this);
-            Thread t = new Thread(new ThreadStart(ThreadMethod));
-            t.Start();
+
+            
+          
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -35,39 +36,10 @@ namespace MLMPOS.view
        
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+           Application.Exit();
         }
 
-        public void ThreadMethod()
-        {
-            while (true)
-            {
-                Console.WriteLine("insert");
-                Thread.Sleep(60*1000);
-                using (SQLiteConnection conn = new SQLiteConnection(config.DB_FILE))
-                {
-                    using (SQLiteCommand cmd = new SQLiteCommand())
-                    {
-                        conn.Open();
-                        cmd.Connection = conn;
-
-                        SQLiteHelper sh = new SQLiteHelper(cmd);
-                        try
-                        {
-                            Dictionary<String, Object> dc = new Dictionary<string, object>();
-                            dc.Add("name", "康师傅冰红茶500ml");
-                            dc.Add("price", 20.5);
-                            sh.Insert("product", dc);
-                        }
-                        catch (Exception ex)
-                        {
-
-                        }
-                        conn.Close();
-                    }
-                }
-            }
-        }
+       
 
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {

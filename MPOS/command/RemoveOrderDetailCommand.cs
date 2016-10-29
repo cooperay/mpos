@@ -27,7 +27,7 @@ namespace MLMPOS.command
                DataRowView drv = (DataRowView)mf.dataGridView1.Rows[i].DataBoundItem;
                 String id = drv["id"].ToString();
                 saleOrderService.deleteList(id);
-                mf.dataGridView1.DataSource = saleOrderService.getOrderListByOrderCode(SystemInfo.CurrentOrderCode);
+                mf.dataGridView1.DataSource = saleOrderService.getOrderListByOrderId(SystemInfo.CurrentOrderId);
                 mf.presenter.setCurrentOrder();
                 mf.presenter.selectLastRow();
             }
