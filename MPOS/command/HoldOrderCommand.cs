@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using MLMPOS.view;
-using MLMPOS.Service.DB;
-using MLMPOS.utils;
+using MPOS.view;
+using MPOS.SERVICE.DB;
+using MPOS.utils;
 
-namespace MLMPOS.command
+namespace MPOS.command
 {
     /**
      * 挂单执行命令

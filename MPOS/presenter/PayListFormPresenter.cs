@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MLMPOS.view;
-using MLMPOS.Service.DB;
+using MPOS.view;
+using MPOS.SERVICE.DB;
 using System.Data;
-using MLMPOS.command;
+using MPOS.command;
 using System.Windows.Forms;
 
-namespace MLMPOS.presenter
+namespace MPOS.presenter
 {
     public class PayListFormPresenter
     {

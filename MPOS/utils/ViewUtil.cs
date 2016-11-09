@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MLMPOS.view;
+using MPOS.view;
 
-namespace MLMPOS.utils
+namespace MPOS.utils
 {
     public class ViewUtil
     {

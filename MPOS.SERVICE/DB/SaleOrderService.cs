@@ -5,10 +5,10 @@ using System.Text;
 using System.Data;
 using System.Data.SQLite;
 using Newtonsoft.Json.Linq;
-using MLMPOS.Service.Entity;
+using MPOS.SERVICE.Entity;
 using Newtonsoft.Json;
 
-namespace MLMPOS.Service.DB
+namespace MPOS.SERVICE.DB
 {
    
     public enum SALE_ORDER_STSTE
@@ -76,7 +76,7 @@ namespace MLMPOS.Service.DB
                     {
                         Dictionary<string, object> dicParameters = new Dictionary<string, object>();
                         dicParameters.Add("@id", id);
-                        dt = sh.Select("select * from SaleOrder where id = @id",dicParameters);
+                        dt = sh.Select("select * from SaleOrder where orderid = @id",dicParameters);
                     }
                     catch (Exception ex)
                     {
@@ -95,19 +95,19 @@ namespace MLMPOS.Service.DB
         {
             SaleOrder order = new SaleOrder();
             DataRow dr =  getOrderById(id);
-            order.Id = dr["id"].ToString();
-            order.Ordercode = dr["ordercode"].ToString();
-            order.Shopcode = dr["shopcode"].ToString();
-            order.Poscode = dr["poscode"].ToString();
-            order.Cashier = dr["cashier"].ToString();
-            order.Amount = dr["amount"].ToString();
-            order.Count = dr["count"].ToString();
-            order.Disamount = dr["disamount"].ToString();
-            order.Createdate = dr["createdate"].ToString();
-            order.Updatedate = dr["updatedate"].ToString();
-            order.State = dr["state"].ToString();
-            order.List = getOrderListByOrderId(id);
-            order.Accountlist = accountService.getTable(id);
+            order.orderid = dr["orderid"].ToString();
+            order.ordercode = dr["ordercode"].ToString();
+            order.shopcode = dr["shopcode"].ToString();
+            order.poscode = dr["poscode"].ToString();
+            order.cashier = dr["cashier"].ToString();
+            order.amount = dr["amount"].ToString();
+            order.count = dr["count"].ToString();
+            order.disamount = dr["disamount"].ToString();
+            order.createdate = dr["createdate"].ToString();
+            order.updatedate = dr["updatedate"].ToString();
+            order.state = dr["state"].ToString();
+            order.list = getOrderListByOrderId(id);
+            order.accountlist = accountService.getTable(id);
             return order;
         }
 
@@ -131,15 +131,15 @@ namespace MLMPOS.Service.DB
                     DataTable dt = null;
                     try
                     {
-                        row["id"] = Guid.NewGuid().ToString("N");
+                        row["orderid"] = Guid.NewGuid().ToString("N");
                         row["state"] = SALE_ORDER_STSTE.NEW;
                         DateTime now = DateTime.Now;
                         row["createdate"] = now.ToString("yyyy-MM-dd HH:mm:ss");
                         row["updatedate"] = now.ToString("yyyy-MM-dd HH:mm:ss");
-                        row["ordercode"] = config.SHOP_CODE + config.POS_CODE+ now.ToString("yyMMddHHmmss") + getSeq().ToString().PadLeft(4,'0') ;
+                        row["ordercode"] = row["shopcode"].ToString() + row["poscode"].ToString() + now.ToString("yyMMddHHmmss") + getSeq().ToString().PadLeft(4, '0');
 
                         sh.Insert("SaleOrder", row);
-                        dt = sh.Select("select * from SaleOrder where id =" + "'"+row["id"] + "'");
+                        dt = sh.Select("select * from SaleOrder where orderid =" + "'"+row["orderid"] + "'");
                     }
                     catch (Exception ex)
                     {
@@ -288,7 +288,7 @@ namespace MLMPOS.Service.DB
                     SQLiteHelper sh = new SQLiteHelper(cmd);
                     try
                     {
-                        sh.Execute("delete from SaleOrderList where id = '" + id + "'");
+                        sh.Execute("delete from SaleOrderList where orderlistid = '" + id + "'");
                     }
                     catch (Exception ex)
                     {
@@ -349,7 +349,7 @@ namespace MLMPOS.Service.DB
                             dic["amount"] = amount;
                             dic["disamount"] = disamount;
                             dic["disprice"] = disprice;
-                            sh.Update("SaleOrderList", dic, "id", lt.Rows[0]["id"]);
+                            sh.Update("SaleOrderList", dic, "orderlistid", lt.Rows[0]["orderlistid"]);
                            
                         }
                        
@@ -395,7 +395,7 @@ namespace MLMPOS.Service.DB
                         dic["amount"] = amountObj == "" ? "0.00" : amountObj;
                         dic["disamount"] = disamountObj == "" ? "0.00" : disamountObj;
                         Dictionary<String, Object> cond2 = new Dictionary<string, object>();
-                        cond2["id"] = orderid;
+                        cond2["orderid"] = orderid;
                         sh.Update("SaleOrder", dic, cond2);
                     }
                     catch (Exception ex)
@@ -428,7 +428,7 @@ namespace MLMPOS.Service.DB
         {
             Dictionary<String, Object> cond = new Dictionary<string, object>();
             cond[col] = value;
-            update(cond, "id", id);
+            update(cond, "orderid", id);
         }
 
         /**

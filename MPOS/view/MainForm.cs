@@ -6,14 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using MLMPOS.Service.DB;
-using MLMPOS.presenter;
-using MLMPOS.command;
+using MPOS.SERVICE.DB;
+using MPOS.presenter;
+using MPOS.command;
 using System.Threading;
-using MLMPOS.Service;
+using MPOS.SERVICE;
 using System.Data.SQLite;
 using MPOS.SERVICE.MQ;
-namespace MLMPOS.view
+namespace MPOS.view
 {
     public partial class MainForm : Form
     {
@@ -30,7 +30,7 @@ namespace MLMPOS.view
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-          // pictureBox1.Image = global::MLMPOS.Properties.Resources.netstate_error;
+          // pictureBox1.Image = global::MPOS.Properties.Resources.netstate_error;
         }
 
        

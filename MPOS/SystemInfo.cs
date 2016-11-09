@@ -1,28 +1,80 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
+using MPOS.SERVICE.DB;
+using System.Data;
 
-namespace MLMPOS
+namespace MPOS
 {
-   public static class SystemInfo
+   public class SystemInfo
     {
-        public static String ShopCode = "1001";
-        public static String ShopName = "豫港大道广场店";
-        public static String cashierCode = "1002";
-        public static String cashier = "收银员";
-        public static String PosCode = "01";
-        public static String Sq = "00001";
+        public static String CASHIER_CODE="cashiercode"; //收银员编号
+        public static String CASHIER_NAME="cashiername"; //收银员名称
+        public static String SHOP_NAME="shopname";
+        public static String SHOP_CODE="shopcode";
+        public static String POS_CODE="poscode";
+        public static String POS_NAME="posname";
+        public static String MQ_ADDRESS ="mqaddr";
+        public static String ORDER_QUEUE = "orderqueue";
+        public static String SERVER_ADDRESS = "ServerAddress";
+
+
         public static String CurrentOrderId;
         public static String CurrentOrderCode;
 
         public static String LastOrderId;
         public static String LastOrderCode;
 
-
         //当前订单金额静态变量
         public static Decimal CurrentOrderAmount = 0;
         public static Decimal CurrentOrderMinus = 0;
+
+
+        private static Dictionary<String,Object> configs  = new Dictionary<String, Object>();
+
+        public static Object getConfig(String key)
+        {
+            Object o = null;
+            try
+            {
+               o =configs[key];
+            }
+            catch(Exception e)
+            {
+
+            }
+            return o;
+        }
+
+        public static void setConfig(String key, Object value)
+        {
+           configs[key] = value;
+        }
+
+        public static Boolean Init()
+        {
+            SystemConfigService service = new SystemConfigService();
+            Dictionary<String, Object> con = service.getConfigs();
+            try
+            {
+                con[SHOP_CODE].ToString();
+                con[SHOP_NAME].ToString();
+                con[POS_CODE].ToString();
+                con[POS_NAME].ToString();
+                con[SERVER_ADDRESS].ToString();
+                con[MQ_ADDRESS].ToString();
+                con[ORDER_QUEUE].ToString();
+                configs = con;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+            
+            return true;
+        }
 
     }
 }

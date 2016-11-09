@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MLMPOS.view;
-using MLMPOS.Service.DB;
+using MPOS.view;
+using MPOS.SERVICE.DB;
 
-namespace MLMPOS.presenter
+namespace MPOS.presenter
 {
     public class PayFormPresenter
     {
@@ -53,23 +53,23 @@ namespace MLMPOS.presenter
             }
 
             Dictionary<String, Object> row = new Dictionary<string, object>();
-            row["id"] = Guid.NewGuid().ToString("N");
+            row["accountid"] = Guid.NewGuid().ToString("N");
             row["ordercode"] = SystemInfo.CurrentOrderCode;
             row["orderid"] = SystemInfo.CurrentOrderId;
             row["sum"] = view.doneAmount;
             row["type"] = view.payTypeTitleLable.Text;
-            row["date"] = DateTime.Now;
+            row["date"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             accountService.add(row);
 
             if(view.doneAmount > view.orderamount)
             {
                 Dictionary<String, Object> row2 = new Dictionary<string, object>();
-                row["id"] = Guid.NewGuid().ToString("N");
+                row["accountid"] = Guid.NewGuid().ToString("N");
                 row["ordercode"] = SystemInfo.CurrentOrderCode;
                 row["orderid"] = SystemInfo.CurrentOrderId;
                 row["sum"] = view.orderamount - view.doneAmount;
                 row["type"] = "找零";
-                row["date"] = DateTime.Now;
+                row["date"] =DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 accountService.add(row);
 
             }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using System.Data.SQLite;
 
-namespace MLMPOS.Service.DB
+namespace MPOS.SERVICE.DB
 {
    public class AccountService
     {

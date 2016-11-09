@@ -1,18 +1,18 @@
-﻿using MLMPOS.view;
+﻿using MPOS.view;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using MLMPOS.Service.DB;
-using MLMPOS.Service.Entity;
-using MLMPOS.Service;
-using MLMPOS.command;
+using MPOS.SERVICE.DB;
+using MPOS.SERVICE.Entity;
+using MPOS.SERVICE;
+using MPOS.command;
 using System.Windows.Forms;
 using MPOS.SERVICE.MQ;
 using System.Threading;
 
-namespace MLMPOS.presenter
+namespace MPOS.presenter
 {
     public class MainFormPresenter
     {
@@ -33,22 +33,23 @@ namespace MLMPOS.presenter
         public void init()
         {
             Dictionary<string, object> row = new Dictionary<string, object>();
-            row["shopcode"] = SystemInfo.ShopCode;
-            row["cashier"] = SystemInfo.cashierCode;
+            row["shopcode"] = SystemInfo.getConfig(SystemInfo.SHOP_CODE);
+            row["cashier"] = SystemInfo.getConfig(SystemInfo.CASHIER_CODE);
             row["count"] = 100;
-            row["poscode"] = SystemInfo.PosCode;
+            row["poscode"] = SystemInfo.getConfig(SystemInfo.POS_CODE);
             row["amount"] = 0.0;
             row["count"] = 0;
             row["disamount"] = 0;
+           
 
             DataRow dr = orderService.createOrder(row);
             DateTime now = DateTime.Now;
             view.dateLabel.Text = now.ToLongDateString().ToString();
             view.orderCodeLabel.Text = dr["ordercode"].ToString();
-            view.shopCodeLabel.Text = SystemInfo.ShopCode;
-            view.cashierLabel.Text = SystemInfo.cashier;
+            view.shopCodeLabel.Text = SystemInfo.getConfig(SystemInfo.SHOP_CODE).ToString();
+            view.cashierLabel.Text = SystemInfo.getConfig(SystemInfo.CASHIER_NAME).ToString();
             view.dataGridView1.DataSource = null;
-            SystemInfo.CurrentOrderId = dr["id"].ToString();
+            SystemInfo.CurrentOrderId = dr["orderid"].ToString();
             SystemInfo.CurrentOrderCode = dr["ordercode"].ToString();
             setCurrentProduct(null);
             setCurrentOrder();
@@ -87,7 +88,7 @@ namespace MLMPOS.presenter
                 //一条记录
                 dr = dt.Rows[0];
                 Dictionary<String, Object> row = new Dictionary<string, object>();
-                row["id"] = Guid.NewGuid().ToString("N");
+                row["orderlistid"] = Guid.NewGuid().ToString("N");
                 row["orderid"] = SystemInfo.CurrentOrderId;
                 row["ordercode"] = SystemInfo.CurrentOrderCode;
                 row["productid"] = dr["id"];
@@ -119,7 +120,7 @@ namespace MLMPOS.presenter
                 {
                    DataRowView drv =(DataRowView)pcf.CurrentRow.DataBoundItem;
                     Dictionary<String, Object> row = new Dictionary<string, object>();
-                    row["id"] = Guid.NewGuid().ToString("N");
+                    row["orderlistid"] = Guid.NewGuid().ToString("N");
                     row["orderid"] = SystemInfo.CurrentOrderId;
                     row["ordercode"] = SystemInfo.CurrentOrderCode;
                     row["productid"] = drv["id"];
@@ -263,7 +264,7 @@ namespace MLMPOS.presenter
 
         public void ThreadMethod()
         {
-          MQCustomer.getInstance().listenerMessage();
+          MQCustomer.getInstance(SystemInfo.getConfig(SystemInfo.SHOP_CODE).ToString(),SystemInfo.getConfig(SystemInfo.POS_CODE).ToString(),SystemInfo.getConfig(SystemInfo.MQ_ADDRESS).ToString()).listenerMessage();
         }
 
     }

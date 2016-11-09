@@ -6,9 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using MLMPOS.command;
-using MLMPOS.presenter;
-namespace MLMPOS.view
+using MPOS.command;
+using MPOS.presenter;
+namespace MPOS.view
 {
     public partial class PayListForm : BaseDialogForm
     {

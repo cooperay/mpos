@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MLMPOS.Service.DB;
+using MPOS.SERVICE.DB;
 using System.Data;
 using System.Data.SQLite;
 
-namespace MLMPOS.Service.DB
+namespace MPOS.SERVICE.DB
 {
     public class KeyBoardService
     {

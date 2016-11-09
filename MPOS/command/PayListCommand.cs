@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using MLMPOS.view;
-using MLMPOS.utils;
+using MPOS.view;
+using MPOS.utils;
 using MPOS.SERVICE.MQ;
-using MLMPOS.Service.DB;
-namespace MLMPOS.command
+using MPOS.SERVICE.DB;
+using MPOS.SERVICE.Entity; 
+namespace MPOS.command
 {
     class PayListCommand : BaseCommand
     {
@@ -43,7 +44,9 @@ namespace MLMPOS.command
             {
                 SystemInfo.LastOrderId = SystemInfo.CurrentOrderId;
                 saleOrderService.updateState(SystemInfo.CurrentOrderId, "5");
-                SaleOrderSyncService.getInstance().SyncOrderById(SystemInfo.CurrentOrderId);
+                SaleOrder order = saleOrderService.getOrderEntityById(SystemInfo.CurrentOrderId);
+                MQHelper mqhelper = MQHelper.getInstance(SystemInfo.getConfig(SystemInfo.SHOP_CODE).ToString(), SystemInfo.getConfig(SystemInfo.POS_CODE).ToString(), SystemInfo.getConfig(SystemInfo.MQ_ADDRESS).ToString(), SystemInfo.getConfig(SystemInfo.ORDER_QUEUE).ToString());
+                mqhelper.asyncSendMessage(order);
                 mf.presenter.init();
             }
             if (mf != null)

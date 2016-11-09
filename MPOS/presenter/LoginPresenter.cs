@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MLMPOS.view;
+using MPOS.view;
 using System.Data;
-using MLMPOS.presenter;
-using MLMPOS.Service.DB;
-namespace MLMPOS.presenter
+using MPOS.presenter;
+using MPOS.SERVICE.DB;
+namespace MPOS.presenter
 {
    public class LoginPresenter
     {
         private LoginInitForm view;
         private CashierService service;
+        private SystemConfigService configService;
         public LoginPresenter(LoginInitForm view)
         {
             this.view = view;
             this.service = new CashierService();
+            this.configService = new SystemConfigService();
         }
 
         public void SystemInit()
@@ -30,10 +32,10 @@ namespace MLMPOS.presenter
             DataRow row = service.CheckCashier(code, pwd);
             if (row != null)
             {
-                SystemInfo.cashier = row["name"].ToString();
-                SystemInfo.cashierCode = row["code"].ToString();
+                SystemInfo.setConfig(SystemInfo.CASHIER_NAME,  row["name"].ToString());
+                SystemInfo.setConfig(SystemInfo.CASHIER_CODE, row["code"].ToString());
                 MainForm main = new MainForm();
-                main.Show();
+                main.ShowDialog();
                 view.Hide();
             }
             else

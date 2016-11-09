@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using Apache.NMS;
 using Apache.NMS.ActiveMQ;
-using MLMPOS.Service;
+using MPOS.SERVICE.DB;
+
 
 namespace MPOS.SERVICE.MQ
 {
@@ -13,19 +14,43 @@ namespace MPOS.SERVICE.MQ
         private IConnectionFactory factory=null;
         private IConnection connection=null;
         private static MQCustomer instance;
-        private String QueuerCustomer = "QUEUER:_D_" + config.SHOP_CODE + "_" + config.POS_CODE;
-        private MQCustomer()
+        private String QueuerCustomer ="defalult";
+        private MQCustomer(String shopCode,String posCode,String mqAddr)
         {
-            factory = new ConnectionFactory(config.MQ_ADDR);
+            QueuerCustomer = "QUEUER:_D_" + shopCode+ "_" + posCode;
+            factory = new ConnectionFactory(mqAddr);
             connection = factory.CreateConnection();
-            connection.ClientId = "CLIENT:C_" + config.SHOP_CODE + "_" + config.POS_CODE+"_" + Guid.NewGuid().ToString("N");
+            connection.ClientId = "CLIENT:C_" + shopCode + "_" + posCode+"_" + Guid.NewGuid().ToString("N");
         }
 
         public static MQCustomer getInstance()
         {
+            SystemConfigService service = new SystemConfigService();
+            Dictionary<String, Object> configs = service.getConfigs();
+            try
+            {
+                String shopcode = configs["shopcode"].ToString();
+                String poscode = configs["poscode"].ToString();
+                String mqaddr = configs["mqaddr"].ToString();
+                return getInstance(shopcode, poscode, mqaddr);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+
+        }
+
+        public static MQCustomer getInstance(String shopCode,String posCode,String mqAddr)
+        {
+            if(shopCode==null || "".Equals(shopCode) || posCode == null || "".Equals(posCode) || mqAddr == null || "".Equals(mqAddr))
+            {
+                throw new Exception();
+            }
             if(instance == null)
             {
-                instance = new MQCustomer();
+                instance = new MQCustomer(shopCode,posCode,mqAddr);
             }
             return instance;
         }
@@ -36,7 +61,6 @@ namespace MPOS.SERVICE.MQ
             {
                 connection.ConnectionInterruptedListener += new ConnectionInterruptedListener(interrupted_Listener);
                 connection.ConnectionResumedListener += new ConnectionResumedListener(resum_Listener);
-                //connection.ClientId = "firstQueueListener";
                 //启动连接，监听的话要主动启动连接
                 connection.Start();
                 ISession session = connection.CreateSession();
@@ -55,7 +79,7 @@ namespace MPOS.SERVICE.MQ
         {
             ITextMessage msg = (ITextMessage)message;
             //异步调用下，否则无法回归主线程
-            Console.WriteLine(message);
+            Console.WriteLine(message.ToString());
 
         }
 
@@ -69,6 +93,8 @@ namespace MPOS.SERVICE.MQ
         {
             Console.WriteLine("连接恢复");
         }
+
+        
 
 
     }

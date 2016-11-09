@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MLMPOS.view
+namespace MPOS.view
 {
     public partial class ProductChosseForm : BaseDialogForm
     {

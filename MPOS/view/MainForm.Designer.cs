@@ -1,4 +1,4 @@
-﻿namespace MLMPOS.view
+﻿namespace MPOS.view
 {
     partial class MainForm
     {
@@ -733,8 +733,6 @@
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            //this.pictureBox1.Image = global::MLMPOS.Properties.Resources.netstate_alive;
-            //this.pictureBox1.InitialImage = global::MLMPOS.Properties.Resources.net;
             this.pictureBox1.Location = new System.Drawing.Point(279, 6);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(38, 31);
@@ -777,7 +775,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1000, 562);
             this.Controls.Add(this.mainPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "MainForm";

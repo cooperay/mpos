@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MLMPOS.Service.Entity
+namespace MPOS.SERVICE.Entity
 {
   public  class SaleOrderList
     {

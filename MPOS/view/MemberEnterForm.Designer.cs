@@ -1,4 +1,4 @@
-﻿namespace MLMPOS.view
+﻿namespace MPOS.view
 {
     partial class MemberEnterForm
     {

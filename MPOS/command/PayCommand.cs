@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using MLMPOS.view;
+using MPOS.view;
 using System.Data;
-namespace MLMPOS.command
+namespace MPOS.command
 {
     class PayCommand : BaseCommand
     {

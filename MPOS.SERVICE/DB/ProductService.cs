@@ -6,7 +6,7 @@ using System.Data.SQLite;
 using System.Configuration;
 using System.Data;
 
-namespace MLMPOS.Service.DB
+namespace MPOS.SERVICE.DB
 {
     public class ProductService
     {

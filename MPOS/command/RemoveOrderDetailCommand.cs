@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using MLMPOS.view;
+using MPOS.view;
 using System.Data;
-using MLMPOS.Service.DB;
-namespace MLMPOS.command
+using MPOS.SERVICE.DB;
+namespace MPOS.command
 {
     //删除单品命令
     public class RemoveOrderDetailCommand : BaseCommand

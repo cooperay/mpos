@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MPOS.SERVICE</RootNamespace>
     <AssemblyName>MPOS.SERVICE</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -58,9 +58,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\Apache.NMS.ActiveMQ.dll</HintPath>
     </Reference>
-    <Reference Include="fastJSON, Version=2.1.0.0, Culture=neutral, PublicKeyToken=6b75a806b86095cd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\fastJSON.dll</HintPath>
+    <Reference Include="JumpKick.HttpLib">
+      <HintPath>.\JumpKick.HttpLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -88,13 +87,16 @@
     <Compile Include="DB\PayTypeService.cs" />
     <Compile Include="DB\ProductService.cs" />
     <Compile Include="DB\SaleOrderService.cs" />
+    <Compile Include="DB\SystemConfigService.cs" />
     <Compile Include="Entity\Account.cs" />
+    <Compile Include="Entity\ResultMessage.cs" />
+    <Compile Include="Entity\Pos.cs" />
     <Compile Include="Entity\Product.cs" />
     <Compile Include="Entity\SaleOrder.cs" />
     <Compile Include="Entity\SaleOrderList.cs" />
+    <Compile Include="HTTP\Server.cs" />
     <Compile Include="MQ\MQCustomer.cs" />
     <Compile Include="MQ\MQHelper.cs" />
-    <Compile Include="MQ\SaleOrderSyncService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLiteHelper\SQLiteColumn.cs" />
     <Compile Include="SQLiteHelper\SQLiteColumnList.cs" />
@@ -106,6 +108,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Apache.NMS.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JumpKick.HttpLib.dll" />
+    <Content Include="log4net.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Newtonsoft.Json.dll">

@@ -6,11 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using MLMPOS.presenter;
+using MPOS.presenter;
 
-namespace MLMPOS.view
+namespace MPOS.view
 {
-    public partial class LoginInitForm : Form
+    public partial class LoginInitForm : BaseDialogForm
     {
         private LoginPresenter presenter;
         public LoginInitForm()
@@ -33,5 +33,11 @@ namespace MLMPOS.view
         {
             presenter.DoLogin();
         }
+
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+            presenter.DoLogin();
+        }
+
     }
 }

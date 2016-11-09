@@ -5,7 +5,7 @@ using System.Text;
 using System.Data.SQLite;
 
 
-namespace MLMPOS.Service.DB
+namespace MPOS.SERVICE.DB
 {
    public class DBStatus
     {
@@ -21,10 +21,10 @@ namespace MLMPOS.Service.DB
 
                     //系统信息表
                     SQLiteTable SystemConfig = new SQLiteTable("SystemConfig");
-                    SystemConfig.Columns.Add(new SQLiteColumn("shopcode", ColType.Text));
-                    SystemConfig.Columns.Add(new SQLiteColumn("poscode", ColType.Text));
-                    SystemConfig.Columns.Add(new SQLiteColumn("regcode", ColType.Text)); //注册码 根据注册码加载pos信息
-                                                                                         //操作员表
+                    SystemConfig.Columns.Add(new SQLiteColumn("configid", ColType.Text));
+                    SystemConfig.Columns.Add(new SQLiteColumn("value", ColType.Text));
+                    SystemConfig.Columns.Add(new SQLiteColumn("remark", ColType.Text));
+                    
                     //收银员表
                     SQLiteTable cashier = new SQLiteTable("Cashier");
                     cashier.Columns.Add(new SQLiteColumn("id", ColType.Text));
@@ -49,6 +49,21 @@ namespace MLMPOS.Service.DB
                     SQLiteTable sequence = new SQLiteTable("OrderSequence");
                     sequence.Columns.Add(new SQLiteColumn("date", ColType.DateTime));
                     sequence.Columns.Add(new SQLiteColumn("seq", ColType.Integer));
+
+                    SQLiteTable pos = new SQLiteTable("PosConfig");
+                    pos.Columns.Add(new SQLiteColumn("id", ColType.Text));
+                    pos.Columns.Add(new SQLiteColumn("posname", ColType.Text));
+                    pos.Columns.Add(new SQLiteColumn("poscode", ColType.Text));
+                    pos.Columns.Add(new SQLiteColumn("shopcode", ColType.Text));
+                    pos.Columns.Add(new SQLiteColumn("posid", ColType.Text));
+                    pos.Columns.Add(new SQLiteColumn("isenable", ColType.Text));
+                    pos.Columns.Add(new SQLiteColumn("shopname", ColType.Text));
+                    pos.Columns.Add(new SQLiteColumn("initcode", ColType.Text));
+                    pos.Columns.Add(new SQLiteColumn("createdate", ColType.Text));
+                    pos.Columns.Add(new SQLiteColumn("lastping", ColType.Text));
+                    pos.Columns.Add(new SQLiteColumn("lastsync", ColType.Text));
+                    pos.Columns.Add(new SQLiteColumn("ipaddr", ColType.Text));
+
 
                     //商品档案表
                     SQLiteTable product = new SQLiteTable("Product");
@@ -119,6 +134,7 @@ namespace MLMPOS.Service.DB
                         sh.CreateTable(keyboard);
                         sh.CreateTable(paytype);
                         sh.CreateTable(sequence);
+                        sh.CreateTable(pos);
                         sh.CreateTable(product);
                         sh.CreateTable(saleorder);
                         sh.CreateTable(saleorderList);
