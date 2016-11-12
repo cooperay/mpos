@@ -57,19 +57,9 @@ namespace MPOS.SERVICE.MQ
             }
             return instance;
         }
-        /// <summary>
-        /// 异步发送消息
-        /// </summary>
-        /// <param name="message">发送的消息体</param>
-        public void asyncSendMessage(Object message)
-        {
-            ParameterizedThreadStart ParStart = new ParameterizedThreadStart(ThreadMethod);
-            Thread t = new Thread(ParStart);
-            t.Start(message);
-        }
+   
 
-
-        public Boolean sendMessage (Object messageObj) 
+        public Boolean sendMessage (String messageText) 
         {
             ISession session = null;
             try
@@ -83,9 +73,9 @@ namespace MPOS.SERVICE.MQ
                     IMessageProducer prod = session.CreateProducer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue(queue));
                     //创建一个发送的消息对象
                     ITextMessage message = prod.CreateTextMessage();
-                    //给这个对象赋实际的消息
-            
-                    message.Text = JsonConvert.SerializeObject(messageObj);
+            //给这个对象赋实际的消息
+
+            message.Text = messageText;
                     //设置消息对象的属性，这个很重要哦，是Queue的过滤条件，也是P2P消息的唯一指定属性
                     message.Properties.SetString("filter", "demo");
                     //生产者把消息发送出去，几个枚举参数MsgDeliveryMode是否长链，MsgPriority消息优先级别，发送最小单位，当然还有其他重载
@@ -96,11 +86,7 @@ namespace MPOS.SERVICE.MQ
             return true;
         }
 
-        private void ThreadMethod(Object message)
-        {
-            sendMessage(message);
-        }
-
+    
 
 
     }

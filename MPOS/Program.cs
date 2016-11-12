@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MPOS.SERVICE.DB;
 using System.Data;
+using MPOS.component;
 namespace MPOS
 {
     static class Program

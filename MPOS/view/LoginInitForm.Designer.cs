@@ -74,9 +74,9 @@
             this.label4.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label4.Location = new System.Drawing.Point(138, 8);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(189, 20);
+            this.label4.Size = new System.Drawing.Size(202, 20);
             this.label4.TabIndex = 20;
-            this.label4.Text = "美乐美POS收银登录";
+            this.label4.Text = "美乐美ERP-MPOS登录";
             // 
             // button1
             // 
@@ -102,6 +102,7 @@
             this.pwdInput.PasswordChar = '*';
             this.pwdInput.Size = new System.Drawing.Size(229, 26);
             this.pwdInput.TabIndex = 2;
+            this.pwdInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pwdInput_KeyPress);
             // 
             // label1
             // 
@@ -136,11 +137,11 @@
             // infoLabel
             // 
             this.infoLabel.AutoSize = true;
+            this.infoLabel.ForeColor = System.Drawing.Color.Red;
             this.infoLabel.Location = new System.Drawing.Point(118, 142);
             this.infoLabel.Name = "infoLabel";
-            this.infoLabel.Size = new System.Drawing.Size(17, 16);
+            this.infoLabel.Size = new System.Drawing.Size(0, 16);
             this.infoLabel.TabIndex = 19;
-            this.infoLabel.Text = "*";
             // 
             // LoginInitForm
             // 

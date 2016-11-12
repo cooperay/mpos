@@ -43,10 +43,9 @@ namespace MPOS.command
             else
             {
                 SystemInfo.LastOrderId = SystemInfo.CurrentOrderId;
-                saleOrderService.updateState(SystemInfo.CurrentOrderId, "5");
+                saleOrderService.updateState(SystemInfo.CurrentOrderId,OrderState.Payed.ToString());
                 SaleOrder order = saleOrderService.getOrderEntityById(SystemInfo.CurrentOrderId);
-                MQHelper mqhelper = MQHelper.getInstance(SystemInfo.getConfig(SystemInfo.SHOP_CODE).ToString(), SystemInfo.getConfig(SystemInfo.POS_CODE).ToString(), SystemInfo.getConfig(SystemInfo.MQ_ADDRESS).ToString(), SystemInfo.getConfig(SystemInfo.ORDER_QUEUE).ToString());
-                mqhelper.asyncSendMessage(order);
+               // MessageSender.getInstance().asyncSendMessage(order);
                 mf.presenter.init();
             }
             if (mf != null)

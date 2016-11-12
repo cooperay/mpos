@@ -89,13 +89,14 @@
     <Compile Include="DB\SaleOrderService.cs" />
     <Compile Include="DB\SystemConfigService.cs" />
     <Compile Include="Entity\Account.cs" />
+    <Compile Include="Entity\DownMessage.cs" />
+    <Compile Include="Entity\OrderState.cs" />
     <Compile Include="Entity\ResultMessage.cs" />
     <Compile Include="Entity\Pos.cs" />
     <Compile Include="Entity\Product.cs" />
     <Compile Include="Entity\SaleOrder.cs" />
     <Compile Include="Entity\SaleOrderList.cs" />
     <Compile Include="HTTP\Server.cs" />
-    <Compile Include="MQ\MQCustomer.cs" />
     <Compile Include="MQ\MQHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLiteHelper\SQLiteColumn.cs" />

@@ -116,7 +116,6 @@ namespace MPOS.CONFIG.presenter
                     {
                         try
                         {
-                            view.registerMessage.Text = "成功";
                             Dictionary<String,String> pos = JsonConvert.DeserializeObject<Dictionary<String,String>>(resultMessage.content);
                             dt.Rows.Add(new object[] { "poscode", pos["poscode"], "POS编号" });
                             dt.Rows.Add(new object[] { "posname", pos["posname"], "POS名称" });
@@ -129,10 +128,21 @@ namespace MPOS.CONFIG.presenter
                             dt.Rows.Add(new object[] { "id", pos["id"] + "", "全局标识" });
                             dt.Rows.Add(new object[] { "mqaddr", pos["mqaddr"], "MQ地址" });
                             dt.Rows.Add(new object[] { "orderqueue", pos["orderqueue"] + "", "上传队列名" });
+                            view.registerMessage.Text = "成功";
+                        }
+                        catch (KeyNotFoundException ex)
+                        {
+                            if (dt.Rows != null && dt.Rows.Count > 1)
+                            {
+                                dt.Rows.Clear();
+                            }
+                            logger.Debug("pos信息不完整：" + result);
+                            logger.Error(ex);
+                            view.registerMessage.Text = "POS信息不完整";
                         }
                         catch(Exception e)
                         {
-                            Console.WriteLine(e);
+                            logger.Error(e);
                         }
                     }
                 }).OnFail(ex =>

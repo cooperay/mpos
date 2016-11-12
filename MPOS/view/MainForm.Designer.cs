@@ -49,10 +49,6 @@
             this.cashierLabel = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
             this.dateLabel = new System.Windows.Forms.Label();
             this.orderCodeLabel = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
@@ -88,10 +84,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.titlePanel = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label15 = new System.Windows.Forms.Label();
+            this.ipAddressLabel = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.logo = new System.Windows.Forms.Label();
+            this.netStateImage = new System.Windows.Forms.PictureBox();
             this.mainPanel.SuspendLayout();
             this.centerPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -106,8 +102,8 @@
             this.panel5.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.panel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.netStateImage)).BeginInit();
             this.SuspendLayout();
             // 
             // mainPanel
@@ -261,10 +257,6 @@
             this.panel11.Controls.Add(this.cashierLabel);
             this.panel11.Controls.Add(this.label31);
             this.panel11.Controls.Add(this.label30);
-            this.panel11.Controls.Add(this.label37);
-            this.panel11.Controls.Add(this.label38);
-            this.panel11.Controls.Add(this.label40);
-            this.panel11.Controls.Add(this.label41);
             this.panel11.Controls.Add(this.dateLabel);
             this.panel11.Controls.Add(this.orderCodeLabel);
             this.panel11.Controls.Add(this.label27);
@@ -313,45 +305,6 @@
             this.label30.Size = new System.Drawing.Size(69, 16);
             this.label30.TabIndex = 19;
             this.label30.Text = "门  店:";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label37.Location = new System.Drawing.Point(611, 40);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(55, 14);
-            this.label37.TabIndex = 18;
-            this.label37.Text = "100.00";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label38.ForeColor = System.Drawing.Color.Red;
-            this.label38.Location = new System.Drawing.Point(609, 10);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(47, 19);
-            this.label38.TabIndex = 17;
-            this.label38.Text = "李四";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(516, 39);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(93, 16);
-            this.label40.TabIndex = 16;
-            this.label40.Text = "本次积分：";
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(516, 12);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(95, 16);
-            this.label41.TabIndex = 15;
-            this.label41.Text = "会    员：";
             // 
             // dateLabel
             // 
@@ -719,8 +672,8 @@
             // 
             // panel9
             // 
-            this.panel9.Controls.Add(this.pictureBox1);
-            this.panel9.Controls.Add(this.label15);
+            this.panel9.Controls.Add(this.netStateImage);
+            this.panel9.Controls.Add(this.ipAddressLabel);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.panel9.ForeColor = System.Drawing.SystemColors.ButtonFace;
@@ -730,24 +683,14 @@
             this.panel9.Size = new System.Drawing.Size(489, 41);
             this.panel9.TabIndex = 1;
             // 
-            // pictureBox1
+            // ipAddressLabel
             // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(279, 6);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(38, 31);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(317, 14);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(160, 16);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "IP：192.168.0.231";
+            this.ipAddressLabel.AutoSize = true;
+            this.ipAddressLabel.Location = new System.Drawing.Point(317, 14);
+            this.ipAddressLabel.Name = "ipAddressLabel";
+            this.ipAddressLabel.Size = new System.Drawing.Size(160, 16);
+            this.ipAddressLabel.TabIndex = 0;
+            this.ipAddressLabel.Text = "IP：192.168.0.231";
             // 
             // panel8
             // 
@@ -765,9 +708,21 @@
             this.logo.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.logo.Location = new System.Drawing.Point(3, 12);
             this.logo.Name = "logo";
-            this.logo.Size = new System.Drawing.Size(182, 19);
+            this.logo.Size = new System.Drawing.Size(157, 19);
             this.logo.TabIndex = 0;
-            this.logo.Text = "美乐美POS收银系统";
+            this.logo.Text = "美乐美ERP-MPOS";
+            // 
+            // netStateImage
+            // 
+            this.netStateImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.netStateImage.Image = global::MPOS.Properties.Resources.net;
+            this.netStateImage.InitialImage = global::MPOS.Properties.Resources.net;
+            this.netStateImage.Location = new System.Drawing.Point(279, 6);
+            this.netStateImage.Name = "netStateImage";
+            this.netStateImage.Size = new System.Drawing.Size(38, 31);
+            this.netStateImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.netStateImage.TabIndex = 1;
+            this.netStateImage.TabStop = false;
             // 
             // MainForm
             // 
@@ -803,9 +758,9 @@
             this.titlePanel.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.netStateImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -828,7 +783,7 @@
         public System.Windows.Forms.Panel panel8;
         public System.Windows.Forms.Label logo;
         public System.Windows.Forms.Panel panel9;
-        public System.Windows.Forms.Label label15;
+        public System.Windows.Forms.Label ipAddressLabel;
         public System.Windows.Forms.Label currentProductUnit;
         public System.Windows.Forms.Label currentProductNameLabel;
         public System.Windows.Forms.Label currentProductPriceLabel;
@@ -852,10 +807,6 @@
         public System.Windows.Forms.Label countLabel;
         public System.Windows.Forms.Label disamountLabel;
         public System.Windows.Forms.Panel panel11;
-        public System.Windows.Forms.Label label37;
-        public System.Windows.Forms.Label label38;
-        public System.Windows.Forms.Label label40;
-        public System.Windows.Forms.Label label41;
         public System.Windows.Forms.Label dateLabel;
         public System.Windows.Forms.Label orderCodeLabel;
         public System.Windows.Forms.Label label27;
@@ -871,6 +822,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn disprice;
         private System.Windows.Forms.DataGridViewTextBoxColumn amount;
         private System.Windows.Forms.DataGridViewTextBoxColumn disamount;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.PictureBox netStateImage;
     }
 }

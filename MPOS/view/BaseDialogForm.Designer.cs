@@ -68,6 +68,7 @@
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.Color.DarkBlue;
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.panel2.ForeColor = System.Drawing.SystemColors.ButtonFace;

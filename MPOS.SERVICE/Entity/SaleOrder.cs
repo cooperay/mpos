@@ -8,6 +8,7 @@ namespace MPOS.SERVICE.Entity
 {
    public class SaleOrder
     {
+      
         public String orderid;
         public String ordercode;
         public String shopcode;
@@ -21,7 +22,6 @@ namespace MPOS.SERVICE.Entity
         public String state;
         public DataTable list;
         public DataTable accountlist;
-
         
     }
 }

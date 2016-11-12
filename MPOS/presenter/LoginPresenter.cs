@@ -6,6 +6,7 @@ using MPOS.view;
 using System.Data;
 using MPOS.presenter;
 using MPOS.SERVICE.DB;
+using MPOS.utils;
 namespace MPOS.presenter
 {
    public class LoginPresenter
@@ -35,7 +36,7 @@ namespace MPOS.presenter
                 SystemInfo.setConfig(SystemInfo.CASHIER_NAME,  row["name"].ToString());
                 SystemInfo.setConfig(SystemInfo.CASHIER_CODE, row["code"].ToString());
                 MainForm main = new MainForm();
-                main.ShowDialog();
+                main.Show();
                 view.Hide();
             }
             else
@@ -43,5 +44,6 @@ namespace MPOS.presenter
                 view.infoLabel.Text = "工号或密码错误";
             }
         }
+      
     }
 }

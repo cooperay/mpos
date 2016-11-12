@@ -11,7 +11,8 @@ using MPOS.command;
 using System.Windows.Forms;
 using MPOS.SERVICE.MQ;
 using System.Threading;
-
+using System.Net;
+using MPOS.utils;
 namespace MPOS.presenter
 {
     public class MainFormPresenter
@@ -28,9 +29,23 @@ namespace MPOS.presenter
             this.productService = new ProductService();
             this.keyBoardService = new KeyBoardService();
             init();
+            view.ipAddressLabel.Text = "IP:" + GetAddressIP();
+            SyncBackUtil.getInstance().startSyncThread(1 * 60 * 1000); //启动后台同步进程
+            MessageListener.getInstance().startListener(); //启动mq队列监听
+            NetCheckUtil.getInstance().startNetCheck(this);
         }
 
         public void init()
+        {
+            initNewOrder();     //初始化当前订单
+            setCurrentProduct(null);  //设置当前商品为空
+            setCurrentOrder();       //设置当前订单
+            setLastOrder();          //设置上一单
+        }
+        /// <summary>
+        /// 初始化新订单
+        /// </summary>
+        public void initNewOrder()
         {
             Dictionary<string, object> row = new Dictionary<string, object>();
             row["shopcode"] = SystemInfo.getConfig(SystemInfo.SHOP_CODE);
@@ -40,7 +55,7 @@ namespace MPOS.presenter
             row["amount"] = 0.0;
             row["count"] = 0;
             row["disamount"] = 0;
-           
+
 
             DataRow dr = orderService.createOrder(row);
             DateTime now = DateTime.Now;
@@ -51,14 +66,9 @@ namespace MPOS.presenter
             view.dataGridView1.DataSource = null;
             SystemInfo.CurrentOrderId = dr["orderid"].ToString();
             SystemInfo.CurrentOrderCode = dr["ordercode"].ToString();
-            setCurrentProduct(null);
-            setCurrentOrder();
-            setLastOrder();
-            Thread t = new Thread(new ThreadStart(ThreadMethod));
-            t.Start();
-            //view.dataGridView1.DataSource = p.getList();
-            // view.dataGridView1.CurrentCell = view.dataGridView1.Rows[60].Cells[0];
+          
         }
+
         /// <summary>
         /// 扫描事件处理，响应barcodeInput的回车事件
         /// 如果barcode为空执行现金支付命令
@@ -262,10 +272,32 @@ namespace MPOS.presenter
 
         }
 
-        public void ThreadMethod()
+        public void changeNetWork(Boolean isalive)
         {
-          MQCustomer.getInstance(SystemInfo.getConfig(SystemInfo.SHOP_CODE).ToString(),SystemInfo.getConfig(SystemInfo.POS_CODE).ToString(),SystemInfo.getConfig(SystemInfo.MQ_ADDRESS).ToString()).listenerMessage();
+            if (isalive)
+            {
+                view.netStateImage.Image = global::MPOS.Properties.Resources.netstate_alive;
+            }else
+            {
+                view.netStateImage.Image = global::MPOS.Properties.Resources.netstate_error;
+            }
         }
+
+        /// </summary>
+       private String GetAddressIP()
+        {
+            ///获取本地的IP地址
+            string AddressIP = string.Empty;
+            foreach (IPAddress _IPAddress in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
+            {
+                if (_IPAddress.AddressFamily.ToString() == "InterNetwork")
+                {
+                    AddressIP = _IPAddress.ToString();
+                }
+            }
+            return AddressIP;
+        }
+
 
     }
 }

@@ -39,5 +39,14 @@ namespace MPOS.view
             presenter.DoLogin();
         }
 
+       
+
+        private void pwdInput_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                presenter.DoLogin();
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ using System.Threading;
 using MPOS.SERVICE;
 using System.Data.SQLite;
 using MPOS.SERVICE.MQ;
+using MPOS.utils;
 namespace MPOS.view
 {
     public partial class MainForm : Form
@@ -36,6 +37,8 @@ namespace MPOS.view
        
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            SyncBackUtil.isExit = true;
+            NetCheckUtil.isExit = true;
            Application.Exit();
         }
 

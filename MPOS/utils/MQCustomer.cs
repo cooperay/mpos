@@ -5,12 +5,14 @@ using System.Text;
 using Apache.NMS;
 using Apache.NMS.ActiveMQ;
 using MPOS.SERVICE.DB;
+using MPOS.SERVICE.Entity;
+using Newtonsoft.Json;
 
-
-namespace MPOS.SERVICE.MQ
+namespace MPOS.utils
 {
     public class MQCustomer
     {
+        
         private IConnectionFactory factory=null;
         private IConnection connection=null;
         private static MQCustomer instance;
@@ -21,6 +23,7 @@ namespace MPOS.SERVICE.MQ
             factory = new ConnectionFactory(mqAddr);
             connection = factory.CreateConnection();
             connection.ClientId = "CLIENT:C_" + shopCode + "_" + posCode+"_" + Guid.NewGuid().ToString("N");
+            SystemInfo.MQ_STATE = true;
         }
 
         public static MQCustomer getInstance()
@@ -67,7 +70,7 @@ namespace MPOS.SERVICE.MQ
                 //通过会话创建一个消费者，这里就是Queue这种会话类型的监听参数设置
                 IMessageConsumer consumer = session.CreateConsumer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue(QueuerCustomer));
                 //注册监听事件
-                consumer.Listener += new MessageListener(consumer_Listener);
+                consumer.Listener += new Apache.NMS.MessageListener(consumer_Listener);
             }
             catch (Exception e)
             {
@@ -79,6 +82,28 @@ namespace MPOS.SERVICE.MQ
         {
             ITextMessage msg = (ITextMessage)message;
             //异步调用下，否则无法回归主线程
+            if(message != null)
+            {
+                try
+                {
+                    DownMessage dm  =   Newtonsoft.Json.JsonConvert.DeserializeObject<DownMessage>(msg.Text);
+                    if (dm != null)
+                    {
+                        switch (dm.actionKey) {
+                            case "ordersync":
+                                SaleOrderService orderService = new SaleOrderService();
+                                orderService.updateState(dm.objKey,OrderState.Synced.ToString());
+                                break;
+                        }
+
+                    }
+                }
+                catch (JsonReaderException e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+
             Console.WriteLine(message.ToString());
 
         }
@@ -86,12 +111,13 @@ namespace MPOS.SERVICE.MQ
         void interrupted_Listener()
         {
             Console.WriteLine("连接断开");
-
+            SystemInfo.MQ_STATE = false;
         }
 
         void resum_Listener()
         {
             Console.WriteLine("连接恢复");
+            SystemInfo.MQ_STATE = true;
         }
 
         

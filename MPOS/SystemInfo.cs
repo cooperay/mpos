@@ -16,6 +16,7 @@ namespace MPOS
         public static String SHOP_CODE="shopcode";
         public static String POS_CODE="poscode";
         public static String POS_NAME="posname";
+        public static String POS_ID = "posid";
         public static String MQ_ADDRESS ="mqaddr";
         public static String ORDER_QUEUE = "orderqueue";
         public static String SERVER_ADDRESS = "ServerAddress";
@@ -30,6 +31,10 @@ namespace MPOS
         //当前订单金额静态变量
         public static Decimal CurrentOrderAmount = 0;
         public static Decimal CurrentOrderMinus = 0;
+
+        public static Boolean MQ_STATE = false;
+
+        public static Boolean SERVER_STATE = false;
 
 
         private static Dictionary<String,Object> configs  = new Dictionary<String, Object>();
@@ -66,6 +71,7 @@ namespace MPOS
                 con[SERVER_ADDRESS].ToString();
                 con[MQ_ADDRESS].ToString();
                 con[ORDER_QUEUE].ToString();
+                con[POS_ID].ToString();
                 configs = con;
             }
             catch(Exception e)

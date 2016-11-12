@@ -11,12 +11,6 @@ using Newtonsoft.Json;
 namespace MPOS.SERVICE.DB
 {
    
-    public enum SALE_ORDER_STSTE
-    {
-        NEW = -1,
-        SALED = 0,
-        SYNCD = 1
-    }
     public class SaleOrderService
     {
         private AccountService accountService;
@@ -56,6 +50,57 @@ namespace MPOS.SERVICE.DB
                     return dt;
                 }
             }
+        }
+
+        /// <summary>
+        /// 根据未同步订单列表
+        /// </summary>
+        /// <param name="cond"></param>
+        /// <returns></returns>
+        public DataTable getUnSyncTable()
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(config.DB_FILE))
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand())
+                {
+                    conn.Open();
+                    cmd.Connection = conn;
+
+                    SQLiteHelper sh = new SQLiteHelper(cmd);
+                    DataTable dt = null;
+                    try
+                    {
+                        dt = sh.Select("select * from SaleOrder where state ='Payed' OR state ='Dirty'");
+
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.ToString();
+                        //dt.Rows.Add(ex.ToString());
+                    }
+                    conn.Close();
+                    return dt;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 得到所有为同步的单据实体信息，包含明细
+        /// </summary>
+        /// <returns></returns>
+        public List<SaleOrder> getUnSyncList()
+        {
+            List<SaleOrder> list = new List<SaleOrder>();
+            DataTable dt = getUnSyncTable();
+            if (dt != null)
+            {
+                for(int i = 0; i <dt.Rows.Count; i++)
+                {
+                    String orderid = dt.Rows[i]["orderid"].ToString();
+                    list.Add(getOrderEntityById(orderid));
+                }
+            }
+            return list;
         }
 
         /**
@@ -132,7 +177,7 @@ namespace MPOS.SERVICE.DB
                     try
                     {
                         row["orderid"] = Guid.NewGuid().ToString("N");
-                        row["state"] = SALE_ORDER_STSTE.NEW;
+                        row["state"] = OrderState.New.ToString();
                         DateTime now = DateTime.Now;
                         row["createdate"] = now.ToString("yyyy-MM-dd HH:mm:ss");
                         row["updatedate"] = now.ToString("yyyy-MM-dd HH:mm:ss");
