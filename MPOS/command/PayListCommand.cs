@@ -15,6 +15,7 @@ namespace MPOS.command
         private Boolean showPayDialog = false;
         private String typeCode = "1";
         private SaleOrderService saleOrderService;
+        private log4net.ILog logger = log4net.LogManager.GetLogger(typeof(PayListCommand));
         public PayListCommand():this(false,"1")
         {
            
@@ -38,14 +39,18 @@ namespace MPOS.command
             DialogResult dr =  form.ShowDialog();
             if (dr == DialogResult.Cancel)  //非正常关闭不做任何处理
             {
-                
+                logger.Debug("PayListForm close by esc");
             }
             else
             {
                 SystemInfo.LastOrderId = SystemInfo.CurrentOrderId;
                 saleOrderService.updateState(SystemInfo.CurrentOrderId,OrderState.Payed.ToString());
                 SaleOrder order = saleOrderService.getOrderEntityById(SystemInfo.CurrentOrderId);
-               // MessageSender.getInstance().asyncSendMessage(order);
+                if (SystemInfo.MQ_STATE)  //MQ连接存在发送同步消息
+                {
+                    logger.Debug("Send sync message Order code is "+ order.ordercode);
+                    MessageSender.getInstance().asyncSendMessage(order);
+                }
                 mf.presenter.init();
             }
             if (mf != null)

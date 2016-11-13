@@ -213,7 +213,6 @@ namespace MPOS.SERVICE.DB
                     {
                         String dateStr = DateTime.Now.ToString("yyyyMMdd");
                         Object countObj = sh.ExecuteScalar("select seq from OrderSequence where date = '" + dateStr + "'");
-                        Console.WriteLine(countObj);
                         if (countObj == null)
                         {
                             Dictionary<String, Object> row = new Dictionary<string, object>();
@@ -434,7 +433,6 @@ namespace MPOS.SERVICE.DB
                         String disamountObj = sh.ExecuteScalar("select sum(disamount) from SaleOrderList where  orderid = @orderid", cond).ToString();
                         
                         
-                        Console.WriteLine(amountObj);
                         Dictionary<String, Object> dic = new Dictionary<string, object>();
                         dic["count"] = countObj == "" ? "0" : countObj;
                         dic["amount"] = amountObj == "" ? "0.00" : amountObj;

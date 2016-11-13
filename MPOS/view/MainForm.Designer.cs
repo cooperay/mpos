@@ -84,10 +84,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.titlePanel = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.netStateImage = new System.Windows.Forms.PictureBox();
             this.ipAddressLabel = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.logo = new System.Windows.Forms.Label();
-            this.netStateImage = new System.Windows.Forms.PictureBox();
             this.mainPanel.SuspendLayout();
             this.centerPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -102,8 +103,9 @@
             this.panel5.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.panel9.SuspendLayout();
-            this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.netStateImage)).BeginInit();
+            this.panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // mainPanel
@@ -683,35 +685,6 @@
             this.panel9.Size = new System.Drawing.Size(489, 41);
             this.panel9.TabIndex = 1;
             // 
-            // ipAddressLabel
-            // 
-            this.ipAddressLabel.AutoSize = true;
-            this.ipAddressLabel.Location = new System.Drawing.Point(317, 14);
-            this.ipAddressLabel.Name = "ipAddressLabel";
-            this.ipAddressLabel.Size = new System.Drawing.Size(160, 16);
-            this.ipAddressLabel.TabIndex = 0;
-            this.ipAddressLabel.Text = "IP：192.168.0.231";
-            // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.logo);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel8.Location = new System.Drawing.Point(0, 0);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(485, 41);
-            this.panel8.TabIndex = 0;
-            // 
-            // logo
-            // 
-            this.logo.AutoSize = true;
-            this.logo.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.logo.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.logo.Location = new System.Drawing.Point(3, 12);
-            this.logo.Name = "logo";
-            this.logo.Size = new System.Drawing.Size(157, 19);
-            this.logo.TabIndex = 0;
-            this.logo.Text = "美乐美ERP-MPOS";
-            // 
             // netStateImage
             // 
             this.netStateImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -723,6 +696,48 @@
             this.netStateImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.netStateImage.TabIndex = 1;
             this.netStateImage.TabStop = false;
+            // 
+            // ipAddressLabel
+            // 
+            this.ipAddressLabel.AutoSize = true;
+            this.ipAddressLabel.Location = new System.Drawing.Point(317, 14);
+            this.ipAddressLabel.Name = "ipAddressLabel";
+            this.ipAddressLabel.Size = new System.Drawing.Size(160, 16);
+            this.ipAddressLabel.TabIndex = 0;
+            this.ipAddressLabel.Text = "IP：192.168.0.231";
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.pictureBox1);
+            this.panel8.Controls.Add(this.logo);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(485, 41);
+            this.panel8.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::MPOS.Properties.Resources.logo;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.InitialImage = null;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(105, 41);
+            this.pictureBox1.TabIndex = 22;
+            this.pictureBox1.TabStop = false;
+            // 
+            // logo
+            // 
+            this.logo.AutoSize = true;
+            this.logo.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.logo.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.logo.Location = new System.Drawing.Point(112, 16);
+            this.logo.Name = "logo";
+            this.logo.Size = new System.Drawing.Size(97, 19);
+            this.logo.TabIndex = 0;
+            this.logo.Text = "ERP-MPOS";
+            this.logo.Click += new System.EventHandler(this.logo_Click);
             // 
             // MainForm
             // 
@@ -758,9 +773,10 @@
             this.titlePanel.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.netStateImage)).EndInit();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.netStateImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -823,5 +839,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn amount;
         private System.Windows.Forms.DataGridViewTextBoxColumn disamount;
         public System.Windows.Forms.PictureBox netStateImage;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

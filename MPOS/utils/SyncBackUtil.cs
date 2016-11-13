@@ -48,18 +48,18 @@ namespace MPOS.utils
 
         private void ThreadMethod()
         {
-        
+            logger.Debug("Back sync start");
             while (true)
             {
                 if (isExit) return;
                 Thread.Sleep(this.mill);
+                logger.Debug("Sync Thread start sync ");
                 List<SaleOrder> list = service.getUnSyncList();
                 list.ForEach(l =>
                 {
                     MessageSender.getInstance().sendMessage(l);
                 });
-                logger.Debug("后台单据同步进程执行：" + DateTime.Now+" 发送同步消息："+list.Count);
-                Console.WriteLine("后台单据同步进程执行：" + DateTime.Now + " 发送同步消息：" + list.Count);
+                logger.Debug("Sync Thread send message count :"+list.Count);
               
             }
         }

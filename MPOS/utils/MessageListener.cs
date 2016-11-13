@@ -9,6 +9,7 @@ namespace MPOS.utils
     public class MessageListener
     {
         private static MessageListener instance;
+        private static log4net.ILog logger = log4net.LogManager.GetLogger(typeof(MessageListener));
         private MessageListener()
         {
             
@@ -25,6 +26,7 @@ namespace MPOS.utils
 
         public void startListener()
         {
+            logger.Debug("MessageListener start");
             Thread t = new Thread(new ThreadStart(ThreadMethod));
             t.Start();
         }
@@ -32,6 +34,7 @@ namespace MPOS.utils
         public void ThreadMethod()
         {
             MQCustomer.getInstance(SystemInfo.getConfig(SystemInfo.SHOP_CODE).ToString(), SystemInfo.getConfig(SystemInfo.POS_CODE).ToString(), SystemInfo.getConfig(SystemInfo.MQ_ADDRESS).ToString()).listenerMessage();
+            logger.Debug("MessageListener start success");
         }
     }
 }

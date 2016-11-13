@@ -181,6 +181,9 @@ namespace MPOS.SERVICE.DB
                             sh.Execute("insert into KeyBoard values('pay_cash','现金结算','X')");
                             sh.Execute("insert into KeyBoard values('pay_wx','微信结算','W')");
                             sh.Execute("insert into KeyBoard values('pay_mcard','M卡结算','M')");
+                            sh.Execute("insert into KeyBoard values('hold_order','挂单','Control+G')");
+                            sh.Execute("insert into KeyBoard values('single_del','单品删除','Control+D')");
+                            sh.Execute("insert into KeyBoard values('lock','锁定POS','L')");
                         }
                         o = sh.ExecuteScalar("select count(*) from PayType");
                         i = Int32.Parse(o.ToString());

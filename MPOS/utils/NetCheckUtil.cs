@@ -50,9 +50,8 @@ namespace MPOS.utils
             while (true)
             {
                 if (isExit) return;
-                Thread.Sleep(10*1000);
-                Console.WriteLine("check net");
                 heartbeat();
+                Thread.Sleep(15*1000);
                
             }
 
@@ -60,6 +59,8 @@ namespace MPOS.utils
 
         public void heartbeat()
         {
+
+            logger.Debug("Server heartbeat");
             String address = SystemInfo.getConfig(SystemInfo.SERVER_ADDRESS).ToString();
             String posid = SystemInfo.getConfig(SystemInfo.POS_ID).ToString();
             Http.Get("http://" + address + "/server/heartbeat.do?posid="+posid).OnSuccess(result =>
@@ -77,6 +78,7 @@ namespace MPOS.utils
                 if (resultMessage == null || "failed".Equals(resultMessage.result))
                 {
                     SystemInfo.SERVER_STATE = false;
+                    logger.Debug("Server heartbeat failed");
                 }
                 else
                 {
@@ -87,6 +89,7 @@ namespace MPOS.utils
             {
                 SystemInfo.SERVER_STATE = false;
                 presenter.changeNetWork(false);
+                logger.Debug("Server heartbeat net error");
             }).Go();
         }
 

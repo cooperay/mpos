@@ -17,6 +17,7 @@ namespace MPOS.utils
         private IConnection connection=null;
         private static MQCustomer instance;
         private String QueuerCustomer ="defalult";
+        private static log4net.ILog logger = log4net.LogManager.GetLogger(typeof(MQCustomer));
         private MQCustomer(String shopCode,String posCode,String mqAddr)
         {
             QueuerCustomer = "QUEUER:_D_" + shopCode+ "_" + posCode;
@@ -39,7 +40,7 @@ namespace MPOS.utils
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                logger.Debug("Get MQCustomer error:"+e);   
                 return null;
             }
 
@@ -74,7 +75,7 @@ namespace MPOS.utils
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                logger.Debug("Start MQCustomer listener error:" + e);
             }
         }
 
@@ -100,23 +101,20 @@ namespace MPOS.utils
                 }
                 catch (JsonReaderException e)
                 {
-                    Console.WriteLine(e);
+                    logger.Debug("MQCustomer listener parse JSON error:" + msg.Text);
                 }
             }
-
-            Console.WriteLine(message.ToString());
-
         }
 
         void interrupted_Listener()
         {
-            Console.WriteLine("连接断开");
+            logger.Debug("MQCustomer listener connection lost");
             SystemInfo.MQ_STATE = false;
         }
 
         void resum_Listener()
         {
-            Console.WriteLine("连接恢复");
+            logger.Debug("MQCustomer listener connection resum");
             SystemInfo.MQ_STATE = true;
         }
 

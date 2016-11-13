@@ -25,15 +25,13 @@ namespace MPOS.command
                 
                int i =  mf.dataGridView1.CurrentRow.Index;
                DataRowView drv = (DataRowView)mf.dataGridView1.Rows[i].DataBoundItem;
-                String id = drv["id"].ToString();
+                String id = drv["orderlistid"].ToString();
                 saleOrderService.deleteList(id);
                 mf.dataGridView1.DataSource = saleOrderService.getOrderListByOrderId(SystemInfo.CurrentOrderId);
                 mf.presenter.setCurrentOrder();
                 mf.presenter.selectLastRow();
             }
 
-            // 
-            //Console.WriteLine(dr["id"]);
 
         }
     }

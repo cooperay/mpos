@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using MPOS.view;
 using MPOS.SERVICE.DB;
 using MPOS.utils;
-
+using MPOS.SERVICE.Entity;
 namespace MPOS.command
 {
     /**
@@ -33,7 +33,7 @@ namespace MPOS.command
                 DialogResult dr = cf.ShowDialog();
                 if(dr == DialogResult.OK)
                 {
-                    saleOrderService.update(SystemInfo.CurrentOrderId, "state", "5");
+                    saleOrderService.update(SystemInfo.CurrentOrderId, "state",OrderState.Holding);
                     mf.presenter.init();
                 }
                 

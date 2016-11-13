@@ -30,6 +30,7 @@ namespace MPOS.presenter
             this.keyBoardService = new KeyBoardService();
             init();
             view.ipAddressLabel.Text = "IP:" + GetAddressIP();
+            view.logo.Text = "ERP-MOS-" + SystemInfo.VERSION;
             SyncBackUtil.getInstance().startSyncThread(1 * 60 * 1000); //启动后台同步进程
             MessageListener.getInstance().startListener(); //启动mq队列监听
             NetCheckUtil.getInstance().startNetCheck(this);

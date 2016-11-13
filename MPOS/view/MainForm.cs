@@ -24,9 +24,6 @@ namespace MPOS.view
             InitializeComponent();
             DBStatus.init();
             presenter = new MainFormPresenter(this);
-
-            
-          
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -72,6 +69,11 @@ namespace MPOS.view
                 presenter.scanCode();
                 e.Handled = true;
             }
+        }
+
+        private void logo_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

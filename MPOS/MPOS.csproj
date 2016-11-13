@@ -66,6 +66,12 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>resources\cart.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Apache.NMS, Version=1.6.0.3061, Culture=neutral, PublicKeyToken=82756feee3957618, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -107,6 +113,7 @@
     <Compile Include="command\BaseCommand.cs" />
     <Compile Include="command\CommandManager.cs" />
     <Compile Include="command\HoldOrderCommand.cs" />
+    <Compile Include="command\LockCommand.cs" />
     <Compile Include="command\MemberEnterCommand.cs" />
     <Compile Include="command\PayCommand.cs" />
     <Compile Include="command\PayListCommand.cs" />
@@ -117,6 +124,7 @@
     <Compile Include="component\BaseGrid.Designer.cs">
       <DependentUpon>BaseGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="presenter\LockFormPresenter.cs" />
     <Compile Include="presenter\LoginPresenter.cs" />
     <Compile Include="presenter\MainFormPresenter.cs" />
     <Compile Include="presenter\PayFormPresenter.cs" />
@@ -145,6 +153,12 @@
     </Compile>
     <Compile Include="view\ConfirmForm.Designer.cs">
       <DependentUpon>ConfirmForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="view\LockForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\LockForm.Designer.cs">
+      <DependentUpon>LockForm.cs</DependentUpon>
     </Compile>
     <Compile Include="view\LoginInitForm.cs">
       <SubType>Form</SubType>
@@ -209,6 +223,9 @@
     <EmbeddedResource Include="view\ConfirmForm.resx">
       <DependentUpon>ConfirmForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="view\LockForm.resx">
+      <DependentUpon>LockForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="view\LoginInitForm.resx">
       <DependentUpon>LoginInitForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -243,8 +260,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\bg.jpg" />
+    <Content Include="resources\cart.ico" />
     <Content Include="resources\loginbg.jpg" />
     <Content Include="resources\logo.ico" />
+    <Content Include="resources\logo.png" />
     <Content Include="resources\net.png" />
     <Content Include="resources\netstate_alive.png" />
     <Content Include="resources\netstate_error.png" />

@@ -13,6 +13,7 @@ namespace MPOS.command
         public static String COMMAND_MEMBER = "member";
         public static String COMMAND_SINGLE_DEL = "single_del";
         public static String HOLD_ORDER　=　"hold_order";
+        public static String LOCK = "lock";
 
         public static String PAY_COMMAND_M = "pay_mcard";
         public static String PAY_COMMAND_WX = "pay_wx";
@@ -31,7 +32,7 @@ namespace MPOS.command
            commands.Add(COMMAND_MEMBER, new MemberEnterCommand());
             commands.Add(COMMAND_SINGLE_DEL, new RemoveOrderDetailCommand());
             commands.Add(HOLD_ORDER, new HoldOrderCommand());
-
+            commands.Add(LOCK, new LockCommand());
 
             commands.Add(COMMAND_PAY, new PayListCommand());
             commands.Add(PAY_COMMAND_CASH, new PayListCommand(true, "1"));  //现金

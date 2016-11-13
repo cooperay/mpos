@@ -10,6 +10,8 @@ namespace MPOS
 {
    public class SystemInfo
     {
+        public static String VERSION = "beta1";
+
         public static String CASHIER_CODE="cashiercode"; //收银员编号
         public static String CASHIER_NAME="cashiername"; //收银员名称
         public static String SHOP_NAME="shopname";
